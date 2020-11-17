@@ -1,3 +1,5 @@
 import {FilePickerOptions} from "./simple-filepicker.common";
 
-export function openFilePicker(params?: FilePickerOptions): Promise<{ files: string[], fileDatas?: any[] }>;
+export class FilePicker {
+    openFilePicker = (params?: FilePickerOptions): Promise<{ files: string[]; fileDatas?: any[]; }> => {}
+}
