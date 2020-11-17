@@ -48,7 +48,7 @@ function setMimeTypeOnIntent(intent: any, allowedTypes: string[]): void {
 export const openFilePicker = (params?: FilePickerOptions) => {
     const context = app.android.foregroundActivity || app.android.startActivity;
     const FILE_CODE = 1231;
-    const intent = new android.content.Intent(android.content.Intent.ACTION_GET_CONTENT);
+    const intent = new android.content.Intent(android.content.Intent.ACTION_OPEN_DOCUMENT);
 
     intent.addCategory(android.content.Intent.CATEGORY_OPENABLE);
     intent.setAction(android.content.Intent.ACTION_OPEN_DOCUMENT);

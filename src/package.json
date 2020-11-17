@@ -1,6 +1,6 @@
 {
-    "name": "nativescript-simple-filepicker",
-    "version": "1.1.1",
+    "name": "whocode-nativescript-filepicker",
+    "version": "1.0.1",
     "description": "A simple file picker using a Custom FilePath extension for Android and UIDocumentPickerView for iOS.",
     "main": "simple-filepicker",
     "typings": "index.d.ts",
@@ -36,14 +36,14 @@
         "iOS"
     ],
     "author": {
-        "name": "Gary Stubbings",
-        "email": "git@garystubbings.com"
+        "name": "Robert Keller",
+        "email": "robertkeller04@gmail.com"
     },
     "bugs": {
-        "url": "https://github.com/garystubbings/nativescript-simple-filepicker/issues"
+        "url": "https://github.com/Who-Code/nativescript-simple-filepicke/issues"
     },
     "license": "MIT",
-    "homepage": "https://github.com/garystubbings/nativescript-simple-filepicker",
+    "homepage": "https://github.com/Who-Code/nativescript-simple-filepicke",
     "readmeFilename": "README.md",
     "devDependencies": {
         "prompt": "^1.0.0",
