@@ -1,5 +1,3 @@
-# Fork of 
-
 # NativeScript Simple FilePicker Plugin
 
 A simple plugin for providing file picker functionality to your NativeScript app.
@@ -7,15 +5,17 @@ A simple plugin for providing file picker functionality to your NativeScript app
 ## Installation
 
 ```
-tns plugin add nativescript-simple-filepicker
+tns plugin add whocode-nativescript-filepicker
 ```
 
 ## Usage 
 
 ``` TypeScript
-import { openFilePicker } from 'nativescript-simple-filepicker';
+import { FilePicker } from 'nativescript-simple-filepicker';
 
-openFilePicker({
+const myPicker = new FilePicker();
+
+myPicker.openFilePicker({
     extensions?: string[]; // Defaults to all
     multipleSelection?: boolean; // Defaults to false
 }).then((data) => {
