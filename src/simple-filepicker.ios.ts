@@ -35,8 +35,10 @@ class DocumentPickerDelegateImpl extends NSObject implements UIDocumentPickerDel
     }
 
     documentPickerDidPickDocumentAtURL(controller, url) {
+        const fileData = NSData.dataWithContentsOfURL(url)
         const value = {
-            files: [url.absoluteString]
+            files: [url.absoluteString],
+            fileData
         };
         this._resolve(value);
         setDocumentPickerDelegate(null);
