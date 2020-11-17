@@ -35,10 +35,9 @@ class DocumentPickerDelegateImpl extends NSObject implements UIDocumentPickerDel
     }
 
     documentPickerDidPickDocumentAtURL(controller, url) {
-        const fileData = NSData.dataWithContentsOfURL(url)
         const value = {
             files: [url.absoluteString],
-            fileData
+            fileDatas: [NSData.dataWithContentsOfURL(url)]
         };
         this._resolve(value);
         setDocumentPickerDelegate(null);
@@ -46,11 +45,14 @@ class DocumentPickerDelegateImpl extends NSObject implements UIDocumentPickerDel
 
     documentPickerDidPickDocumentsAtURLs(controller, urls) {
         const files = [];
+        const fileDatas = [];
         for (let i = 0; i < urls.count; i++) {
             files.push(urls[i].absoluteString);
+            fileDatas.push(NSData.dataWithContentsOfURL(urls[i]));
         }
         const value = {
-            files
+            files,
+            fileDatas
         };
         this._resolve(value);
         setDocumentPickerDelegate(null);
