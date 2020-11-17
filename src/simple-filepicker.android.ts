@@ -48,14 +48,15 @@ function setMimeTypeOnIntent(intent: any, allowedTypes: string[]): void {
 export const openFilePicker = (params?: FilePickerOptions) => {
     const context = app.android.foregroundActivity || app.android.startActivity;
     const FILE_CODE = 1231;
-    const intent = new android.content.Intent(android.content.Intent.ACTION_OPEN_DOCUMENT);
+    const intent = new android.content.Intent(android.content.Intent.ACTION_GET_CONTENT);
 
     intent.addCategory(android.content.Intent.CATEGORY_OPENABLE);
     intent.setAction(android.content.Intent.ACTION_OPEN_DOCUMENT);
     intent.putExtra(android.content.Intent.EXTRA_ALLOW_MULTIPLE, params && !!params.multipleSelection || false);
 
     const allowedTypes = params ? params.extensions : [];
-    setMimeTypeOnIntent(intent, allowedTypes);
+    // setMimeTypeOnIntent(intent, allowedTypes);
+    intent.setType('image/*|application/pdf');
 
     return callIntent(context, intent, FILE_CODE).then((result: any) => {
         if (result.resultCode === android.app.Activity.RESULT_OK) {
