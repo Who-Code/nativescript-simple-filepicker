@@ -44,6 +44,7 @@ export class FilePicker {
         intent.addCategory(android.content.Intent.CATEGORY_OPENABLE);
         intent.setAction(android.content.Intent.ACTION_OPEN_DOCUMENT);
         intent.putExtra(android.content.Intent.EXTRA_ALLOW_MULTIPLE, params && !!params.multipleSelection || false);
+        // intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     
         const allowedTypes = params ? params.extensions : [];
         setMimeTypeOnIntent(intent, allowedTypes);
