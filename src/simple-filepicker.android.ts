@@ -70,7 +70,7 @@ class UriHelper {
             }
             // DownloadsProvider
             else if (UriHelper.isDownloadsDocument(uri)) {
-                return UriHelper.getDataColumn(uri, null, null, true);
+                return UriHelper.getDataColumn(uri, null, null, true, false);
             }
             // MediaProvider
             else if (UriHelper.isMediaDocument(uri)) {
@@ -85,18 +85,20 @@ class UriHelper {
                     contentUri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
                 } else if ("audio" === type) {
                     contentUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                } else if ("document" === type) {
+                    contentUri = android.provider.MediaStore.Files.getContentUri('external');
                 }
 
                 let selection = "_id=?";
                 let selectionArgs = [id];
 
-                return UriHelper.getDataColumn(contentUri, selection, selectionArgs, false);
+                return UriHelper.getDataColumn(contentUri, selection, selectionArgs, false, type === "document");
             }
         }
         else {
             // MediaStore (and general)
             if ("content" === uri.getScheme()) {
-                return UriHelper.getDataColumn(uri, null, null, false);
+                return UriHelper.getDataColumn(uri, null, null, false, false);
             }
             // FILE
             else if ("file" === uri.getScheme()) {
@@ -107,7 +109,7 @@ class UriHelper {
         return undefined;
     }
 
-    private static getDataColumn(uri: android.net.Uri, selection, selectionArgs, isDownload: boolean) {
+    private static getDataColumn(uri: android.net.Uri, selection, selectionArgs, isDownload: boolean, isFile: boolean) {
         let cursor = null;
         let filePath;
         if (isDownload) {
@@ -132,8 +134,29 @@ class UriHelper {
                     cursor.close();
                 }
             }
-        }
-        else {
+        } else if(isFile) {
+            let columns = [android.provider.MediaStore.Files.FileColumns.DATA];
+            let filePath;
+
+            try {
+                cursor = this.getContentResolver().query(uri, columns, selection, selectionArgs, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    let column_index = cursor.getColumnIndexOrThrow(columns[0]);
+                    filePath = cursor.getString(column_index);
+                    if (filePath) {
+                        return filePath;
+                    }
+                }
+            }
+            catch (e) {
+                console.log(e);
+            }
+            finally {
+                if (cursor) {
+                    cursor.close();
+                }
+            }
+        } else {
             let columns = [android.provider.MediaStore.MediaColumns.DATA];
             let filePath;
 
