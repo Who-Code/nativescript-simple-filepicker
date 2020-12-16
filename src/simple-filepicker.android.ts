@@ -209,7 +209,7 @@ export class FilePicker {
         intent.addCategory(android.content.Intent.CATEGORY_OPENABLE);
         intent.setAction(android.content.Intent.ACTION_OPEN_DOCUMENT);
         intent.putExtra(android.content.Intent.EXTRA_ALLOW_MULTIPLE, params && !!params.multipleSelection || false);
-        // intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     
         const allowedTypes = params ? params.extensions : [];
         setMimeTypeOnIntent(intent, allowedTypes);
@@ -230,18 +230,27 @@ export class FilePicker {
                             }
                         }
                     }
-                    const paths = uris.map(uri => {
-                        let customUri: any = UriHelper._calculateFileUri(uri);
-                        if (customUri && customUri !== '') {
-                            return customUri;
-                        } else {
-                            return com.nativescript.simple.FilePicker.getPath(context, uri);
-                        }
-                    });
-                    return {
+                    let paths = [];
+                    try {
+                        paths = uris.map(uri => {
+                            let customUri: any = UriHelper._calculateFileUri(uri);
+                            if (customUri && customUri !== '') {
+                                return customUri;
+                            } else {
+                                return com.nativescript.simple.FilePicker.getPath(context, uri);
+                            }
+                        });
+                    } catch (e) {
+                        console.error(e);
+                    }
+                    
+                    const selection = {
                         files: paths,
                         uris
-                    };
+                    }
+                    console.log('SELECTION DONE WITH');
+                    console.dir(selection)
+                    return selection;
                 }
                 return {
                     files: [],
