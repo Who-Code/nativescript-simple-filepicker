@@ -231,12 +231,12 @@ export class FilePicker {
                         }
                     }
                     const paths = uris.map(uri => {
-                        // let customUri: any = UriHelper._calculateFileUri(uri);
-                        // if (customUri && customUri !== '') {
-                        //     return customUri;
-                        //} else {
-                        return com.nativescript.simple.FilePicker.getPath(context, uri);
-                        //}
+                        let customUri: any = UriHelper._calculateFileUri(uri);
+                        if (customUri && customUri !== '') {
+                            return customUri;
+                        } else {
+                            return com.nativescript.simple.FilePicker.getPath(context, uri);
+                        }
                     });
                     return {
                         files: paths,
